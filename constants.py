@@ -1,4 +1,4 @@
-# Các biến toàn cục
+# const value
 
 WIDTH, HEIGHT = 650, 600
 ROWS, COLS =50, 50

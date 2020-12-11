@@ -1,4 +1,4 @@
-# file xử lý 
+# processing file
 import pygame
 import random
 from constants import*
@@ -13,40 +13,39 @@ def count_neighbors(old_board,row,col):
     count -= old_board[row][col]            
     return count
 
-class Board:
+class Board:                                          # the state board
     def __init__(self,new_board):                     # constructor
-        self.board =[]                                # bảng trạng thái
-        if new_board==[]:                             # nếu new_board chưa có, nghĩa là khởi tạo mẫu ban đầu
+        self.board =[]                                
+        if new_board==[]:                             # if new_board is empty, init a random state board
             for i in range(ROWS):
                 self.board.append([])           
                 for j in range(COLS):
-                    self.board[i].append(random.randrange(0, 2, 1) )   # 0 hoặc 1
+                    self.board[i].append(random.randrange(0, 2, 1) )   # 1 or 0
 
-        else:                               # update lại 
+        else:                                       # else update the state board
             self.board = new_board       
-    
 
-    
-    def draw_board(self,win):                  #vẽ bảng lên window
-        win.fill(WHITE)                        #background màu trắng
+        
+    def draw_board(self,win):                  #draw the board function
+        win.fill(WHITE)                        #start with white background
         for row in range(ROWS):
             for col in range(COLS):
-                if self.board[row][col] == 1:   #nếu giá trị 1 thì vẽ ô màu đen
+                if self.board[row][col] == 1:   # if state is live (1), color the square black
                     pygame.draw.rect(win, BLACK, (row * SQUARE_SIZE,col * SQUARE_SIZE, SQUARE_SIZE,SQUARE_SIZE))
                
-                pygame.draw.rect(win, BLACK, (row * SQUARE_SIZE,col * SQUARE_SIZE, SQUARE_SIZE,SQUARE_SIZE),1)  # vẽ lưới
+                pygame.draw.rect(win, BLACK, (row * SQUARE_SIZE,col * SQUARE_SIZE, SQUARE_SIZE,SQUARE_SIZE),1)  # draw the net
                 
-    def update_board(self,new_board):           # hàm để lấy trạng thái mới và ghi vào new_board
+    def update_board(self,new_board):           # update the board state function
         for i in range(ROWS):
             new_board.append([])
             for j in range(COLS):
-                neighbor = count_neighbors(self.board,i,j)               # đếm hàng xóm
+                neighbor = count_neighbors(self.board,i,j)             
 
-                if self.board[i][j]== 1 and (neighbor < 2 or neighbor > 3):    # quy tắc 1 và 2      
-                    new_board[i].append(0)                                     # chết       
+                if self.board[i][j]== 1 and (neighbor < 2 or neighbor > 3):    # 1st and 2nd rule      
+                    new_board[i].append(0)                                     # die       
 
-                elif self.board[i][j] == 0 and neighbor==3:                    # quy tắc 4                                                        
-                    new_board[i].append(1)                                     # sinh sản
-                else:                                                          # quy tắc 3
-                    new_board[i].append(self.board[i][j])                      # giữ nguyên trạng thái
+                elif self.board[i][j] == 0 and neighbor==3:                    # 4th rule                                                        
+                    new_board[i].append(1)                                     # reproduction
+                else:                                                          # 3rd rule
+                    new_board[i].append(self.board[i][j])                      # keep the old state
     
