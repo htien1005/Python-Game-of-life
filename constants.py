@@ -1,0 +1,8 @@
+# Các biến toàn cục
+
+WIDTH, HEIGHT = 650, 600
+ROWS, COLS =50, 50
+SQUARE_SIZE = WIDTH // COLS
+
+BLACK = (0,0,0)
+WHITE = (255,255,255)
