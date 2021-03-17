@@ -15,7 +15,7 @@ from constants import WIDTH, HEIGHT
 from board import Board
 
 # pylint: disable=no-member            
-FPS =200           
+FPS =20           
 
 WIN = pygame.display.set_mode((WIDTH,HEIGHT))           # display the window with width and height 
 pygame.display.set_caption('Game of Life')              # the name of the window
